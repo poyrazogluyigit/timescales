@@ -3,6 +3,7 @@
 import sys
 from util.parse import get_parser
 from util.generator import Generator
+from serialization.serialization import *
 import zenoh
 from time import sleep
 
@@ -39,8 +40,16 @@ def main():
         print("An error occurred with zenoh.")
         exit
 
+    previous = dict()
     for i in timestamps:
-        pub.put(f"{i}")
+        message = f"{i}"
+        # encoding
+        if args.format == "flatbuf":
+            message = encode_flatbuf(i, True, args.persistent, previous)
+        elif args.format == "json":
+            message = encode_json(i)
+        print(message)
+        pub.put(message)
         sleep(interval)
 
     pub.undeclare()

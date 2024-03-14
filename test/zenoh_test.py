@@ -1,7 +1,8 @@
 import zenoh
+from zenoh import Encoding
 
 def listener(sample):
-    print(f"{sample.payload.decode('utf-8')}")
+    print(f"{sample.payload.decode()}")
 
 
 session = zenoh.open()
