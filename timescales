@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.11
 
 import sys
 from util.parse import get_parser
@@ -48,7 +48,7 @@ def main():
             message = encode_flatbuf(i, True, args.persistent, previous)
         elif args.format == "json":
             message = encode_json(i)
-        print(message)
+        # print(message)
         pub.put(message)
         sleep(interval)
 
