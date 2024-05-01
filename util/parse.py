@@ -56,27 +56,11 @@ def get_parser():
                         default=7,
                         type=int,
                         metavar='N')
-    parser.add_argument('--name',
-                        help='''define the name of specification (default: spec)''',
-                        default="spec",
-                        metavar='STRING')
     parser.add_argument('--condense',
                         help='''define the maximum amount of condensation in the generated trace (default: 0)''',
                         default=0,
                         type=int,
                         metavar='N')
-    parser.add_argument('--failing-end',
-                        help='''disable appending a sequence to the trace to make the spec fail (default: false)''',
-                        action="store_true",
-                        default=False)
-    parser.add_argument('--future',
-                        help='''generate a future MTL formula (default: past)''',
-                        action="store_true",
-                        default=False)
-    parser.add_argument('--output-dir',
-                        help='''use existing DIR as the directory to write output files in (default: current)''',
-                        default='',
-                        metavar='DIR')
     parser.add_argument('--format',
                         help='''select the output format in {csv, json, protobuf, flatbuf} (default: csv)''',
                         default='string',
