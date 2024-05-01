@@ -3,8 +3,10 @@
 import sys
 from util.parse import get_parser
 from util.generator import Generator
-from serialization.serialization import *
+from serialization.json import encode_json
+from serialization.flatbuf import Flatbuffers
 import zenoh
+from zenoh.value import Encoding
 from time import sleep
 
 # import timescales
@@ -27,7 +29,7 @@ def main():
 
     interval = args.interval
 
-    generator_args = [args.property, args.lbound, args.ubound, args.min_recur, args.max_recur, args.duration, args.failing_end]
+    generator_args = [args.property, args.lbound, args.ubound, args.min_recur, args.max_recur]
 
     timestamps = Generator.generate(*generator_args)
 
@@ -42,14 +44,17 @@ def main():
 
     previous = dict()
     for i in timestamps:
-        message = f"{i}"
+        print(i)
+        if args.format == "string":
+            message = f"{i}"
         # encoding
-        if args.format == "flatbuf":
-            message = encode_flatbuf(i, True, args.persistent, previous)
+        elif args.format == "flatbuf":
+            message = Flatbuffers.encode_flatbuf(i[0], True, args.persistent, previous)
         elif args.format == "json":
-            message = encode_json(i)
-        # print(message)
-        pub.put(message)
+            # message = encode_json(i[0])
+            pass
+        print(message)
+        pub.put(message, encoding=Encoding.APP_OCTET_STREAM())
         sleep(interval)
 
     pub.undeclare()
