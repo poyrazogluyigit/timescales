@@ -79,7 +79,7 @@ def get_parser():
                         metavar='DIR')
     parser.add_argument('--format',
                         help='''select the output format in {csv, json, protobuf, flatbuf} (default: csv)''',
-                        default='csv',
+                        default='string',
                         metavar='FORMAT')
     
     return parser

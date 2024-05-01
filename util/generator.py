@@ -6,16 +6,16 @@ from properties.bounded_response import *
 class Generator:
 
     
-    functions = {"absence_after_q": [bounded_absence_after_q.generate_trace, [1, 4, 5]],
-                 "absence_before_r": [bounded_absence_before_r.generate_trace, [1, 4, 5]],
-                 "absence_between_q_and_r": [bounded_absence_between_q_and_r.generate_trace, [0, 1, 4, 5]],
-                 "always_after_q": [bounded_universality_after_q.generate_trace, [1, 4, 5]],
-                 "always_before_r": [bounded_universality_before_r.generate_trace, 1, 4, 5],
-                 "always_between_q_and_r": [bounded_universality_between_q_and_r.generate_trace, [0, 1, 4, 5]],
-                 "recurrence_globally": [bounded_recurrence_globally.generate_trace, [1, 4, 5]],
-                 "recurrence_between_q_and_r": [bounded_recurrence_between_q_and_r.generate_trace, [1, 2, 3, 4, 5]],
-                 "response_globally": [bounded_response_globally.generate_trace, [0, 1, 4, 5]],
-                 "response_between_q_and_r": [bounded_response_between_q_and_r.generate_trace, [0, 1, 2, 3, 4, 5]]}
+    functions = {"absence_after_q": [bounded_absence_after_q.generate_trace, [1]],
+                 "absence_before_r": [bounded_absence_before_r.generate_trace, [1]],
+                 "absence_between_q_and_r": [bounded_absence_between_q_and_r.generate_trace, [0, 1]],
+                 "always_after_q": [bounded_universality_after_q.generate_trace, [1]],
+                 "always_before_r": [bounded_universality_before_r.generate_trace, 1],
+                 "always_between_q_and_r": [bounded_universality_between_q_and_r.generate_trace, [0, 1]],
+                 "recurrence_globally": [bounded_recurrence_globally.generate_trace, [1]],
+                 "recurrence_between_q_and_r": [bounded_recurrence_between_q_and_r.generate_trace, [1, 2, 3]],
+                 "response_globally": [bounded_response_globally.generate_trace, [0, 1]],
+                 "response_between_q_and_r": [bounded_response_between_q_and_r.generate_trace, [0, 1, 2, 3]]}
 
     @staticmethod
     def generate(property, lower_bound, upper_bound, min_recur, max_recur, duration, failing_end):
