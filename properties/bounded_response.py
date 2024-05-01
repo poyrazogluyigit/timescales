@@ -8,13 +8,13 @@ TimedData = namedtuple('TimedData', ["time", 'data'])
 class bounded_response_globally:
 
     @staticmethod
-    def generate_trace(lower_bound, upper_bound, duration=1000, failing_end=True):
+    def generate_trace(lower_bound, upper_bound):
 
         Data = namedtuple('Data', ['p', 's'])
 
         time = 0
 
-        while time < duration:
+        while True:
 
             yield [TimedData(time=time, data=Data(p=True, s=False))]
             time += 1
@@ -29,39 +29,31 @@ class bounded_response_globally:
             yield [TimedData(time=time, data=Data(p=False, s=True))]
             time += 1
 
-        if failing_end:
-
-            yield [TimedData(time=time, data=Data(p=True, s=False))]
-            time += 1
-            for j in range(upper_bound):
-                yield [TimedData(time=time, data=Data(p=False, s=False))]
-                time += 1
-
 
 
 class bounded_response_between_q_and_r:
 
     @staticmethod
-    def generate_trace(lower_bound, upper_bound, min_recur=True, max_recur=7, duration=1000, failing_end=True):
+    def generate_trace(lower_bound, upper_bound, min_recur=True, max_recur=7):
 
         Data = namedtuple('Data', ['q', 'p', 's', 'r'])
 
         time = 0
 
-        while time < duration:
+        while True:
 
             yield [TimedData(time=time, data=Data(q=True,
                                                     p=False, s=False, r=False))]
             time += 1
 
             yield [TimedData(time=time,
-                               data=Data(q=False, p=False, s=False, r=False))]
+                                data=Data(q=False, p=False, s=False, r=False))]
             time += 1
 
             for i in range(0, random.randint(min_recur, max_recur)):
 
                 yield [TimedData(time=time,
-                                   data=Data(q=False, p=True, s=False, r=False))]
+                                    data=Data(q=False, p=True, s=False, r=False))]
                 time += 1
 
                 # Draws a random number between lower and upper bounds
@@ -69,36 +61,19 @@ class bounded_response_between_q_and_r:
 
                 for j in range(k-1):
                     yield [TimedData(time=time,
-                                       data=Data(q=False, p=False, s=False, r=False))]
+                                        data=Data(q=False, p=False, s=False, r=False))]
                     time += 1
 
                 yield [TimedData(time=time,
-                                   data=Data(q=False, p=False, s=True, r=False))]
+                                    data=Data(q=False, p=False, s=True, r=False))]
                 time += 1
 
                 yield [TimedData(time=time,
-                                   data=Data(q=False, p=False, s=False, r=False))]
+                                    data=Data(q=False, p=False, s=False, r=False))]
                 time += 1
 
             yield [TimedData(time=time,
-                               data=Data(q=False, p=False, s=False, r=True))]
+                                data=Data(q=False, p=False, s=False, r=True))]
             time += 1
 
-        if failing_end:
-
-            yield [TimedData(time=time, data=Data(q=True,
-                                                    p=False, s=False, r=False))]
-            time += 1
-
-            yield [TimedData(time=time,
-                               data=Data(q=False, p=True, s=False, r=False))]
-            time += 1
-
-            for j in range(upper_bound+1):
-                yield [TimedData(time=time,
-                                   data=Data(q=False, p=False, s=False, r=False))]
-                time += 1
-
-            yield [TimedData(time=time,
-                               data=Data(q=False, p=False, s=False, r=True))]
-            time += 1
+        

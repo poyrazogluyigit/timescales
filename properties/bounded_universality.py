@@ -8,14 +8,14 @@ TimedData = namedtuple('TimedData', ["time", 'data'])
 class bounded_universality_after_q:
 
     @staticmethod
-    def generate_trace(upper_bound, duration=1000, failing_end=True):
+    def generate_trace(upper_bound):
 
         Data = namedtuple('Data', ['q', 'p'])
 
         time = 0
 
-        while time < duration:
-
+        while True:
+       
             yield [TimedData(time=time, data=Data(q=True, p=True))]
             time += 1
 
@@ -30,46 +30,24 @@ class bounded_universality_after_q:
                                                         p=bool(random.randint(0, 1))))]
                 time += 1
 
-        if failing_end:
-
-            yield [TimedData(time=time, data=Data(q=True, p=False))]
-            time += 1
-            for j in range(upper_bound-1):
-                yield [TimedData(time=time, data=Data(q=False, p=True))]
-                time += 1
-            yield [TimedData(time=time, data=Data(q=False, p=False))]
-            time += 1
-
 
 class bounded_universality_before_r:
 
     @staticmethod
-    def generate_trace(upper_bound, duration=1000, failing_end=True):
+    def generate_trace(upper_bound):
 
         Data = namedtuple('Data', ['p', 'r'])
 
         time = 0
 
-        while time < duration:
+        while True:
 
             for j in range(upper_bound):
                 yield [TimedData(time=time,
-                                   data=Data(p=bool(random.randint(0, 1)), r=False))]
+                                    data=Data(p=bool(random.randint(0, 1)), r=False))]
                 time += 1
 
             for j in range(upper_bound):
-                yield [TimedData(time=time, data=Data(p=True, r=False))]
-                time += 1
-
-            yield [TimedData(time=time, data=Data(p=True, r=True))]
-            time += 1
-
-        if failing_end:
-
-            yield [TimedData(time=time, data=Data(p=False, r=False))]
-            time += 1
-
-            for j in range(upper_bound-1):
                 yield [TimedData(time=time, data=Data(p=True, r=False))]
                 time += 1
 
@@ -80,13 +58,13 @@ class bounded_universality_before_r:
 class bounded_universality_between_q_and_r:
 
     @staticmethod
-    def generate_trace(lower_bound, upper_bound, duration=1000, failing_end=True):
+    def generate_trace(lower_bound, upper_bound):
 
         Data = namedtuple('Data', ['q', 'p', 'r'])
 
         time = 0
 
-        while time < duration:
+        while True:
 
             yield [TimedData(time=time, data=Data(q=True, p=True, r=False))]
             time += 1
@@ -96,24 +74,12 @@ class bounded_universality_between_q_and_r:
 
             for j in range(k):
                 yield [TimedData(time=time,
-                                   data=Data(q=False, p=True, r=False))]
+                                    data=Data(q=False, p=True, r=False))]
                 time += 1
 
             yield [TimedData(time=time, data=Data(q=False, p=True, r=True))]
             time += 1
 
             yield [TimedData(time=time,
-                               data=Data(q=False, p=False, r=False))]
+                                data=Data(q=False, p=False, r=False))]
             time += 1
-
-        if failing_end:
-            yield [TimedData(time=time, data=Data(q=True, p=True, r=False))]
-            time += 1
-            for j in range(upper_bound+1):
-                yield [TimedData(time=time,
-                                   data=Data(q=False, p=True, r=False))]
-                time += 1
-            yield [TimedData(time=time, data=Data(q=False, p=True, r=True))]
-            time += 1
-
-
