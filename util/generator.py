@@ -18,8 +18,8 @@ class Generator:
                  "response_between_q_and_r": [bounded_response_between_q_and_r.generate_trace, [0, 1, 2, 3]]}
 
     @staticmethod
-    def generate(property, lower_bound, upper_bound, min_recur, max_recur, duration, failing_end):
-        params = [lower_bound, upper_bound, min_recur, max_recur, duration, failing_end]
+    def generate(property, lower_bound, upper_bound, min_recur, max_recur):
+        params = [lower_bound, upper_bound, min_recur, max_recur]
         try:
             generator, args = Generator.functions.get(property)
             try:
