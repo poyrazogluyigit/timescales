@@ -3,7 +3,7 @@ from .Timescales import Message
 
 class Flatbuffers:
 
-    builder = flatbuffers.Builder(512)
+    # builder = flatbuffers.Builder(512)
 
     @classmethod
     def encode_flatbuf(self, data, with_time=True, persistent=False, previous=None):
@@ -11,7 +11,8 @@ class Flatbuffers:
         from .Timescales.NullableBool import CreateNullableBool
         from .Timescales.NullableInt64 import CreateNullableInt64
 
-        builder = Flatbuffers.builder
+        # builder = Flatbuffers.builder
+        builder = flatbuffers.Builder(512)
         Message.MessageStart(builder)
 
         if (with_time):
@@ -49,14 +50,15 @@ class Flatbuffers:
 
 
         msg = Message.MessageEnd(builder)
-        builder.FinishSizePrefixed(msg)
+        builder.Finish(msg)
         buf = builder.Output()
-        return buf
+        return bytes(buf)
 
 
     @classmethod
-    def decode_flatbuf(message):
-        msg = Message.Message.GetRootAsMessage(message, 0)
+    def decode_flatbuf(self, message):
+        msg_bytearray = bytearray(message)
+        msg = Message.Message.GetRootAsMessage(msg_bytearray, 0)
         dec_msg = dict()
 
         if msg.Time():
@@ -73,6 +75,8 @@ class Flatbuffers:
 
         if msg.PropS():
             dec_msg['s'] = msg.PropS().Value()
+
+        return dec_msg
 
 
 
